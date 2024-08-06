@@ -1,6 +1,0 @@
-Bootstrap: docker
-From: python:2.7
-
-%post
-    python2 -m pip install biopython==1.76
-
