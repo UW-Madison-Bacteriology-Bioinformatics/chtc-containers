@@ -1,0 +1,7 @@
+Bootstrap: docker
+From: continuumio/miniconda3:24.4.0-0
+
+%post
+	conda install -c conda-forge ncbi-datasets-cli=16.22.0 unzip
+
+

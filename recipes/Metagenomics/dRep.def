@@ -1,0 +1,9 @@
+Bootstrap: docker
+From: biocontainers/drep:3.2.2
+
+%post
+
+%labels
+    Author Patricia Tran
+    ContactEmail ptran5@wisc.edu
+    Name dRep container for CHTC

@@ -1,0 +1,9 @@
+Bootstrap: docker
+From: continuumio/miniconda3:24.3.0-0
+
+%post
+        conda install bioconda::samtools python=3.9.6
+%labels
+    Author Patricia Tran
+    ContactEmail ptran5@wisc.edu
+    Name SeqKit fasta information container for CHTC

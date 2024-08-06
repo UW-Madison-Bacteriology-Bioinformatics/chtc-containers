@@ -1,0 +1,6 @@
+Bootstrap: docker
+From: continuumio/miniconda3:24.3.0-0
+
+%post
+	conda install -c conda-forge -c bioconda -c defaults biopython=1.78 hmmer=3.2.1 mafft fasttree=2.1.10 prodigal=2.6.3 raxml
+	python3 -m pip install metabolisHMM	

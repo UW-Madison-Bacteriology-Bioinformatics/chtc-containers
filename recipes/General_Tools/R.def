@@ -1,0 +1,5 @@
+Bootstrap: docker
+From: rocker/tidyverse
+
+%post
+	R -e "install.packages(c('ggResidpanel'), dependencies=TRUE, repos='http://cran.rstudio.com/')"

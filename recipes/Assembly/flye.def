@@ -1,0 +1,10 @@
+Bootstrap: docker
+From: staphb/flye:2.9.4
+
+%post
+	
+
+%labels
+    Author Patricia Tran
+    ContactEmail ptran5@wisc.edu
+    Name Flye assembler container for CHTC

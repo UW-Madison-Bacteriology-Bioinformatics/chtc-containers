@@ -1,0 +1,12 @@
+Bootstrap: docker
+From: continuumio/miniconda3:24.3.0-0
+
+%environment
+	
+
+%post
+	conda install bioconda::bowtie
+	conda install bioconda::fastx_toolkit
+	conda install conda-forge::python=2.7
+	conda install conda-forge::biopython
+

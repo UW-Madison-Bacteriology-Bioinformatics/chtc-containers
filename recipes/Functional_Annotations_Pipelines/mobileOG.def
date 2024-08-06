@@ -1,0 +1,8 @@
+Bootstrap: docker
+From: continuumio/miniconda3:24.4.0-0
+
+%post
+	conda install -c conda-forge biopython
+	conda install -c bioconda prodigal
+	conda install -c bioconda diamond
+	conda install -c anaconda pandas

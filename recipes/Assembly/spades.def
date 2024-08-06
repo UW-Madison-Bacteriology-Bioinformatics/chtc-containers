@@ -1,0 +1,10 @@
+Bootstrap: docker
+From: continuumio/miniconda3:24.3.0-0
+
+%post
+        conda install bioconda::spades=3.15.5
+
+%labels
+    Author Patricia Tran
+    ContactEmail ptran5@wisc.edu
+    Name SPAdes Assembler container for CHTC

@@ -1,0 +1,11 @@
+Bootstrap: docker
+From: continuumio/miniconda3:24.3.0-0
+
+%environment
+	export JAVA_CMD=$(which java)
+
+
+%post
+	conda install -c conda-forge -c bioconda nextflow singularity mamba matplotlib
+
+

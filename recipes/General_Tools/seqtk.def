@@ -1,0 +1,10 @@
+Bootstrap: docker
+From: continuumio/miniconda3:24.4.0-0
+
+%post
+        conda install bioconda::seqtk
+
+%labels
+    Author Patricia Tran
+    ContactEmail ptran5@wisc.edu
+    Name SeqTK container for CHTC

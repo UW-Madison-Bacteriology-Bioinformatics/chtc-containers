@@ -1,0 +1,10 @@
+Bootstrap: docker
+From: continuumio/miniconda3:24.3.0-0
+
+%post
+        conda install bioconda::mafft=7.525
+
+%labels
+    Author Patricia Tran
+    ContactEmail ptran5@wisc.edu
+    Name MAFFT aligner container for CHTC

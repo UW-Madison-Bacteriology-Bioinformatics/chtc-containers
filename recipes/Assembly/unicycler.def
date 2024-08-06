@@ -1,0 +1,9 @@
+Bootstrap: docker
+From: staphb:unicycler=0.5.0
+
+%post
+
+%labels
+    Author Patricia Tran
+    ContactEmail ptran5@wisc.edu
+    Name Unicycler Hybrid Assembler container for CHTC
