@@ -25,9 +25,8 @@ You do NOT need to create a `.sif` image file everytime you run a job, you can r
 If you have previously used `conda` to run bioinformatics software, the process used to involve creating a conda environment in your `/home/username` folder, then packing the conda environment into a tar.gz file, and writing in the tar.gz file inside of the executable script (.sh) when runnign a job on CHTC.
 
 The website anaconda.org is where we can search for software to install. `Bioconda` (https://anaconda.org/bioconda/repo) is the name of a conda channel that contains many bioinformatics software, ready to install (over 10,000 of them to be exact!). 
-On CHTC, we need to use Containers, such as Docker, Apptainer (formerly called Singularity) images to install and run any software.
+On CHTC, we need to use Containers, such as Docker, Apptainer/Singularity images to install and run any software.
 One challenge is that the repository for pre-built installable container images (e.g. Docker: hub.docker.com) is much less than on conda.
-
 
 > **_NOTE:_**  Conda: a way to install software along with all its dependencies, but is specific to different computer architectures (e.g. Mac, Windows, Linux). Container: A way to install softawre along with all its dependencies, IN ADDITION to the installation being built on a specific computer architecture.
 
