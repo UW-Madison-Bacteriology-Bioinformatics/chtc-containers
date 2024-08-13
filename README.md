@@ -132,6 +132,52 @@ In this .sh file, you do no need to activate the conda environment anymore.
 You can submit your job using `condor_submit <file.sub>` as usual, making sure that you are using the <file.sub> file that uses the .sif file in the container line.
 If you are using `condor_submit` with the `-i` flag to interactively test your code, you will need to type `conda activate` (no need to specify any environment name)
 
+# How to build a Apptainer container from an existing conda environment
+
+1) First activate your environment, and export it as a yml file:
+Let's say I have an environment called `checkm2`
+
+```
+conda activate $ENVNAME
+conda env export > $ENVNAME.yml
+conda deactivate
+ls
+```
+If you were to open your yml file, it might look something like this: https://github.com/UW-Madison-Bacteriology-Bioinformatics/chtc-containers/blob/main/recipes/from_yml/checkm2.yml
+
+2) Send the yml file to another computer, another laptop, or in this case, your CHTC home folder.
+3) On CHTC, create a definition file (recipe file) that looks like this: https://github.com/UW-Madison-Bacteriology-Bioinformatics/chtc-containers/blob/main/recipes/from_yml/checkm2.def
+   You can copy and paste this into CHTC, and replace the yml file for your own file name.
+4) The steps to build your container using `condor_submit -i` are going to be very similar to what we've seen previously, but make sure to include the `yml` file in the `transfer_input_files` line like this:
+
+```
+   [ptran5@ap2002 apptainer_def]$ cat build.sub
+# build.sub
+# For building an Apptainer container
+
+universe = vanilla
+log = build.log
+
+# In the latest version of HTCondor on CHTC, interactive jobs require an executable.
+# If you do not have an existing executable, use a generic linux command like hostname as shown below.
+executable = /usr/bin/hostname
+
+# If you have additional files in your /home directory that are required for your container, add them to the transfer_input_files line as a comma-separated list.
+transfer_input_files = checkm2.yml, checkm2.def
+
+
+requirements = (HasCHTCStaging == true)
+
++IsBuildJob = true
+request_cpus = 4
+request_memory = 16GB
+request_disk = 16GB
+
+queue
+```
+
+5) From there, submit your condor job interactively and use the `Apptainer build` commands to build your container (.sif file)
+   
 
 
 
