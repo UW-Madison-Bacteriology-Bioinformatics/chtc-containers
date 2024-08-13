@@ -1,0 +1,13 @@
+Bootstrap: docker
+From: continuumio/miniconda3:24.3.0-0
+
+%files
+    ./checkm2.yml
+
+%post
+    conda env create -f checkm2.yml
+
+%labels
+    Author Patricia Tran
+    ContactEmail ptran5@wisc.edu
+    Name Building a CheckM2 container using a conda YML file.
