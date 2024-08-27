@@ -1,0 +1,7 @@
+Bootstrap: docker
+From: continuumio/miniconda3:22.11.1
+
+%post
+        conda config --set channel_priority flexible
+        conda install -c conda-forge singularity">=3.0.0"
+        conda install -c conda-forge -c bioconda nextflow">23.0.0"
