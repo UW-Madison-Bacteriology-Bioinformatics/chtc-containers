@@ -78,6 +78,23 @@ queue
 
 Follow the instructions on : https://chtc.cs.wisc.edu/uw-research-computing/apptainer-htc.html#start-an-interactive-build-job
 
+in summary the command are:
+```
+# Build the container using the instructions in the def file, write it to the file name of your choice with the extension .sif
+apptainer build <container.sif> <container.def>
+# Test the container:
+apptainer shell -e <container.sif>
+# the prompt will change to Apptainer>
+# Check installation by typing -h (or other ways to access the program) next to the program name
+fastqc -h
+# Once you saw that it works, exit the container:
+exit
+# Move the .sif file to your staging folder:
+mv <container.sif> /staging/netid/.
+# exit the interactive Build job
+exit
+```
+
 ## Getting Ready to Submit your Actual Job
 
 ### Create a submit file for your job
