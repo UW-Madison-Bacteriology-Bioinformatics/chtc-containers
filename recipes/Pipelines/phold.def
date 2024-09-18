@@ -1,0 +1,6 @@
+Bootstrap: docker
+From: continuumio/miniconda3:24.3.0-0
+
+%post
+        conda install -c conda-forge -c bioconda phold python=3.11
+

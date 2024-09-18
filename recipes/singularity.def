@@ -1,0 +1,7 @@
+Bootstrap: docker
+From: continuumio/miniconda3:22.11.1
+
+%environment
+	
+%post
+	conda install -c conda-forge singularity">=3.0.0" wget curl

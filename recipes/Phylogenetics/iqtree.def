@@ -1,0 +1,10 @@
+Bootstrap: docker
+From: continuumio/miniconda3:24.4.0-0
+
+%post
+        conda install -c bioconda -c conda-forge iqtree=2.3.6
+
+%labels
+    Author Patricia Tran
+    ContactEmail ptran5@wisc.edu
+    Name IQTree program to make phylogenies for CHTC

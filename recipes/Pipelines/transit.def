@@ -1,0 +1,6 @@
+Bootstrap: docker
+From: continuumio/miniconda3:24.3.0-0
+
+%post
+	conda install -c conda-forge numpy scipy pillow pypubsub matplotlib statsmodels wxPython scikit-learn
+
