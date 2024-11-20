@@ -28,7 +28,8 @@ The website anaconda.org is where we can search for software to install. `Biocon
 On CHTC, we need to use Containers, such as Docker, Apptainer/Singularity images to install and run any software.
 One challenge is that the repository for pre-built installable container images (e.g. Docker: hub.docker.com) is much less than on conda.
 
-> **_NOTE:_**  Conda: a way to install software along with all its dependencies, but is specific to different computer architectures (e.g. Mac, Windows, Linux). Container: A way to install softawre along with all its dependencies, IN ADDITION to the installation being built on a specific computer architecture.
+> [!NOTE]
+> Conda: a way to install software along with all its dependencies, but is specific to different computer architectures (e.g. Mac, Windows, Linux). Container: A way to install softawre along with all its dependencies, IN ADDITION to the installation being built on a specific computer architecture.
 
 Thankfully, it only takes a few steps to convert a conda environment into a container image, by creating a `.def` file of this format:
 
@@ -46,7 +47,9 @@ The `From` line is so that the container can be built by using miniconda. You do
 
 The lines after `%post` are the `conda install` instructions that you would have typed into your terminal. Note that you do not need to write `conda create` or `conda activate` in this `.def` file.
 
---> On this GitHub repository, I have created `.def` files of common bioinformatics software that can be used to create `.sif` container images to be used within CHTC. You can use them to build your own .sif images, OR use the template above and replace what follows the `%post` line with your own tool you want to install from conda.
+> [!NOTE]
+> On this GitHub repository under [`recipe`](https://github.com/UW-Madison-Bacteriology-Bioinformatics/chtc-containers/tree/main/recipes),I have created `.def` files of common bioinformatics software that can be used to create `.sif` container images to be used within CHTC.
+> You can use them to build your own .sif images, OR use the template above and replace what follows the `%post` line with your own tool you want to install from conda.
 
 ### Starting an interactive job to create a container:
 Once you have a `.def` file, create a `build.sub` file, that will be used to start an interactive job `condor_submit -i build.sub`:
