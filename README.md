@@ -81,6 +81,11 @@ request_disk = 16GB
 queue
 ```
 
+then type the following to submit your interactive job:
+```
+condor_submit -i build.sub
+```
+
 Follow the instructions on : https://chtc.cs.wisc.edu/uw-research-computing/apptainer-htc.html#start-an-interactive-build-job
 
 In summary, the commands to type once you enter the interactive job are:
