@@ -22,7 +22,7 @@ You do NOT need to create a `.sif` image file everytime you run a job, you can r
 
 ### Create a container image using the `.def` file using these instructions: https://chtc.cs.wisc.edu/uw-research-computing/apptainer-htc.html
 
-If you have previously used `conda` to run bioinformatics software, the process used to involve creating a conda environment in your `/home/username` folder, then packing the conda environment into a tar.gz file, and writing in the tar.gz file inside of the executable script (.sh) when runnign a job on CHTC.
+If you have previously used `conda` to install bioinformatics software, the process usually involves creating an 'environment' in your `/home/username` folder, then packing the conda environment into a tar.gz file, and writing in the tar.gz file inside of the executable script (.sh) when running a job on CHTC.
 
 The website anaconda.org is where we can search for software to install. `Bioconda` (https://anaconda.org/bioconda/repo) is the name of a conda channel that contains many bioinformatics software, ready to install (over 10,000 of them to be exact!). 
 On CHTC, we need to use Containers, such as Docker, Apptainer/Singularity images to install and run any software.
@@ -31,7 +31,7 @@ One challenge is that the repository for pre-built installable container images 
 > [!NOTE]
 > Conda: a way to install software along with all its dependencies, but is specific to different computer architectures (e.g. Mac, Windows, Linux). Container: A way to install softawre along with all its dependencies, IN ADDITION to the installation being built on a specific computer architecture.
 
-Thankfully, it only takes a few steps to convert a conda environment into a container image, by creating a `.def` file of this format:
+Thankfully, it only takes a few steps to convert a conda environment into a container image, by creating a `.def` recipe file to build an Apptainer container by using the following template:
 
 ```
 Bootstrap: docker
@@ -45,14 +45,16 @@ The line `Bootstrap` tells you that this is a Docker image.
 
 The `From` line is so that the container can be built by using miniconda. You don't have to install miniconda3 yourself, because an image exists here: https://hub.docker.com/r/continuumio/miniconda3
 
-The lines after `%post` are the `conda install` instructions that you would have typed into your terminal. Note that you do not need to write `conda create` or `conda activate` in this `.def` file.
+The lines after `%post` are the `conda install` instructions that you would have typed into your terminal. 
+Note that you do not need to write `conda create` or `conda activate` in this `.def` file.
+This is often the line that you would edit to obtain your software of your choice.
 
 > [!NOTE]
 > On this GitHub repository under [`recipe`](https://github.com/UW-Madison-Bacteriology-Bioinformatics/chtc-containers/tree/main/recipes),I have created `.def` files of common bioinformatics software that can be used to create `.sif` container images to be used within CHTC.
 > You can use them to build your own .sif images, OR use the template above and replace what follows the `%post` line with your own tool you want to install from conda.
 
 ### Starting an interactive job to create a container:
-Once you have a `.def` file, create a `build.sub` file, that will be used to start an interactive job `condor_submit -i build.sub`:
+Once you have a `.def` file somewhere in your `/home/username` directory on chtc, create a `build.sub` file, that will be used to start an interactive job `condor_submit -i build.sub`:
 In the code below, change the line `transfer_input_files = image.def` to correspond to the name of your `image.def` file (e.g. `spades.def`, `fastqc.def`, etc.)
 
 ```
@@ -81,7 +83,8 @@ queue
 
 Follow the instructions on : https://chtc.cs.wisc.edu/uw-research-computing/apptainer-htc.html#start-an-interactive-build-job
 
-in summary the command are:
+In summary, the commands to type once you enter the interactive job are:
+
 ```
 # Build the container using the instructions in the def file, write it to the file name of your choice with the extension .sif
 apptainer build <container.sif> <container.def>
@@ -97,12 +100,13 @@ mv <container.sif> /staging/netid/.
 # exit the interactive Build job
 exit
 ```
+Make sure you exit from the interactive job before moving on to the next step.
 
-## Getting Ready to Submit your Actual Job
+## Getting Ready to Submit your actual Job
 
 ### Create a submit file for your job
 
-This is a DIFFERENT `.sub` file than in the previous step. Here, the submit file contains the resource requested to run the actual computational job. 
+This is a DIFFERENT `.sub` file than in the previous step. Here, the submit file contains the resources requested to run the actual computational job. 
 You will likely need to set custom cpus, memory and disk space.
 
 Here is an example of the `sub` file to be used to actually use the container in a job on CHTC:
@@ -132,7 +136,7 @@ request_disk = 10GB
 queue
 ```
 
-You will need to change the line `container_image` to correspond to the file path of the `.sif` file you created in step 1.
+You will need to change the line `container_image` to correspond to the file path of the `.sif` file you created the previous step. 
 
 ### Writing your executable script for CHTC (.sh)
 
@@ -143,16 +147,19 @@ In this script, include the usual shebang line (`#!/bin/bash`) followed by the c
 
 fastqc -h
 
-fastqc *.fastq
+fastqc /staging/ptran5/raw_data/*.fastq
 ```
 
-In this .sh file, you do no need to activate the conda environment anymore. 
+In this .sh file, you do not need to activate the conda environment anymore. 
+In this example, we are running the program FASTQC on all the fastq samples in the folder `/staging/ptran5/raw_data/`. 
+We can do this because `/staging` is accessible from the working nodes, therefore we can call it directly in the executable script.
+
 
 ### Submit your job
 You can submit your job using `condor_submit <file.sub>` as usual, making sure that you are using the <file.sub> file that uses the .sif file in the container line.
-If you are using `condor_submit` with the `-i` flag to interactively test your code, you will need to type `conda activate` (no need to specify any environment name)
+If you are using `condor_submit` with the `-i` flag to interactively test your code. If you do test your code interactively, you will need to type `conda activate` (no need to specify any environment name)
 
-# How to build a Apptainer container from an existing conda environment
+# Alternative: How to build an Apptainer container from an existing conda environment
 
 1) First activate your environment, and export it as a yml file:
 Let's say I have an environment called `checkm2`
