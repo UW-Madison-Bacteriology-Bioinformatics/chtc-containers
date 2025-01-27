@@ -131,7 +131,8 @@ log = job.log
 error = job.err
 output = job.out
 
-requirements = (HasCHTCStaging == true)
+requirements = (HasCHTCStaging == true) && (OpSysMajorVer > 7) && (HasChtcProjects == true)
+
 
 # Make sure you request enough disk for the container image in addition to your other input files
 request_cpus = 1
