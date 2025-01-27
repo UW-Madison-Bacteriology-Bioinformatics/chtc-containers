@@ -1,9 +1,2 @@
-Bootstrap: docker
-From: continuumio/miniconda3:24.3.0-0
-
-%files
-
-%post
-	git clone https://github.com/chklovski/CheckM2.git && cd CheckM2
-	conda env create -n checkm2 -f checkm2.yml
-	python setup.py install
+For checkM2, use the Galaxy apptainer image:
+wget https://depot.galaxyproject.org/singularity/checkm2%3A1.0.2--pyh7cba7a3_0
