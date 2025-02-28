@@ -6,19 +6,20 @@ Why not make general software tools available to the UW-Madison research communi
 Assuming that you have these files on hand, this guide will show you how to push (publish) them on the UW-Madison GitLab Container registry, and how these container images can be used within CHTC `.sub` files.
 All the steps in this guide are done on the Terminal, logged into CHTC, and on a web browser.
 
-# Gap
+# Gaps addressed by this project
 
 This github page chtc-containers contains recipes to software (`.def`) files, but still requires each user to built their own `sif` file and have it in their `staging` folder.
 The purpose of the guide is to document how `sif` files can be published online, such that they can be used directly in a HTCondor `.submit` file. This aims to make it easier for researcher to use software, while still using best practices (e.g. containers) to running them on CHTC.
-Additionally, this links multiple UW-Madison cyberinfrastructure tools, such as the Uw-Madison GitLab registry instance, and CHTC resources. Hopefully, this will make it easier for researchers here to make the most of the resources available to them to enable their research!
+Additionally, this links multiple UW-Madison cyberinfrastructure tools and services, such as the **Uw-Madison GitLab registry** instance, and **CHTC** resources. Hopefully, this will make it easier for researchers here to make the most of the resources available to them to enable their research!
 
 # Prerequisites
 1. A container image you want to share, in a `.sif` format, already located on CHTC
 2. A CHTC account (https://chtc.cs.wisc.edu/uw-research-computing/account-details)
 3. A Uw-Madison GitLab Account (https://kb.wisc.edu/shared-tools/page.php?id=121442)
 
-# Step by Step
-## Create a GitLab Repository, and enable container 
+# Step-by-Step Instructions
+
+## 1. Create a GitLab Repository, and enable container 
 
 Login using your UW-Madison credentials, and click on New Project, Create Blank Project. Set the permissions to **public**
 
@@ -28,7 +29,7 @@ Navigate to your project, click on Deploy, and select Container Registry. Enable
 
 ![Screenshot 2025-02-28 at 11 59 41 AM](https://github.com/user-attachments/assets/7270bcfe-4fc3-4b30-89fe-428d9316f386)
 
-## Log into CHTC and set up apptainer
+## 2. Log into CHTC and set up apptainer
 ```
 ssh netid@ap2002.chtc.wisc.edu
 # enter password
@@ -55,9 +56,9 @@ To verify that it worked, type:
 apptainer remote list
 ```
 
-### Login into apptainer from the terminal:
+## 3. Login into the registry using the Terminal:
 
-Next, we want to use our netID credentials to log into the registry.doit.wisc.edu. Note that we do not need the specific path to our project here.
+Still logged into CHTC, next, we want to use our netID credentials to log into the registry.doit.wisc.edu. Note that we do not need the specific path to our project here.
 Type:
 ```
 apptainer registry login --username yourNetID docker://registry.doit.wisc.edu
@@ -84,7 +85,7 @@ Password / Token:
 INFO:    Token stored in /home/netid/.apptainer/remote.yaml
 ```
 
-## Push the container to the registry
+## 4. Push the container to the registry
 
 From your terminal, navigate to the folder with your containers. This is likely to be in your staging folder.
 For example, I have a folder called `/staging/ptran5/apptainer`
@@ -105,22 +106,24 @@ If successful you will see:
 INFO:    Upload complete
 ```
 
-## Check you container online!
+## 5. Check out your container online!
 Go to the web address:
 `https://git.doit.wisc.edu/yourusername/yourproject/container_registry`. Refresh the page, and you should see your container updated there!
 
-## Use the container in a submit file
+## 6. Use the container in a submit file
 
 To use a container image from the GitLab registry, use the path in your `container_image` line:
 ```
 container_image = docker://registry.doit.wisc.edu/ptran5/containers/flye:1.0
 ```
 
+**If other people want to use the container you build, they can include the proper address in their container_image line of their submit file.**
 
-### Futher readings
+
+# Futher readings
 
 
-### Future steps
-The current container repo is associated with a user (e.g. ptran5), but I would like to make a group one (e.g. Bioinformatics-UW) such as a people (not just me) can contribute (push) files.
+# Future steps
+- The current container repo is associated with a user (e.g. ptran5), but I would like to make a group one (e.g. Bioinformatics-UW) such as a people (not just me) can contribute (push) files.
 
 
